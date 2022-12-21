@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Brand } from 'src/brand/entities/brand.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import Category from './category.enum';
 
 @Entity()
 export class Product {
@@ -15,6 +15,10 @@ export class Product {
   @Column()
   price: number;
 
-  @ManyToOne(() => Brand, (brand) => brand.products)
-  brand: Brand;
+  // enum Category Column
+  @Column({
+    type: 'enum',
+    enum: Category,
+  })
+  category: Category;
 }

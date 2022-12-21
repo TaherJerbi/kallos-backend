@@ -12,25 +12,16 @@ export class ProductService {
     private readonly productsRepository: Repository<Product>,
   ) {}
   create(createProductDto: CreateProductDto) {
-    return this.productsRepository.save({
-      ...createProductDto,
-      brand: {
-        id: createProductDto.brandId,
-      },
-    });
+    return this.productsRepository.save(createProductDto);
   }
 
   findAll() {
-    return this.productsRepository.find({
-      relations: ['brand'],
-    });
+    return this.productsRepository.find();
   }
 
   findOne(id: number) {
     return this.productsRepository.findOne({
-      where: {
-        id,
-      },
+      where: { id },
     });
   }
 
