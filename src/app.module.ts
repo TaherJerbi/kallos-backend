@@ -6,6 +6,7 @@ import { ProductModule } from './product/product.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProfileController } from './profile.controller';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProfileController } from './profile.controller';
       synchronize: true,
     }),
     UsersModule,
+    OrdersModule,
     AuthModule,
   ],
   controllers: [AppController, ProfileController],
