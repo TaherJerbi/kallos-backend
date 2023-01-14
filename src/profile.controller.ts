@@ -11,7 +11,7 @@ export class ProfileController {
   @Get()
   async getProfile(@Req() req) {
     const { password, ...user } = await this.usersService.findOne(
-      req.user.username,
+      req.user.email,
     );
     return user;
   }
@@ -19,7 +19,7 @@ export class ProfileController {
   @UseGuards(JwtAuthGuard)
   @Put()
   async updateProfile(@Req() req, @Body() body) {
-    await this.usersService.update(req.user.username, body);
+    await this.usersService.update(req.user.email, body);
     return this.getProfile(req);
   }
 }

@@ -23,19 +23,19 @@ export class OrdersController {
 
   @Post()
   create(@Req() req, @Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto, req.user.username);
+    return this.ordersService.create(createOrderDto, req.user.email);
   }
 
   @Get()
   findAll(@Req() req) {
     const user = req.user;
-    return this.ordersService.findByUser(user.username);
+    return this.ordersService.findByUser(user.email);
   }
 
   @Put('/:id')
   async cancelOrder(id: number, @Req() req) {
     const order = await this.ordersService.findOne(id);
-    if (req.user.username !== order.user.email) {
+    if (req.user.email !== order.user.email) {
       throw new UnauthorizedException();
     }
 
