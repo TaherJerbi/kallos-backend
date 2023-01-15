@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/product/entities/product.entity';
-import { ProductService } from 'src/product/product.service';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderStatus } from './entities/order-status.enum';
 import { Order } from './entities/order.entity';
@@ -24,19 +22,13 @@ export class OrdersService {
 
   async create(createOrderDto: CreateOrderDto, email: string) {
     const user = await this.usersService.findOne(email);
-    console.log(
-      '🚀 ~ file: orders.service.ts:27 ~ OrdersService ~ create ~ user',
-      user,
-    );
     const order = this.ordersRepository.create({
       orderDate: new Date(),
       status: createOrderDto.status,
+      shippingAddress: createOrderDto.shippingAddress,
+      note: createOrderDto.note,
       user,
     });
-    console.log(
-      '🚀 ~ file: orders.service.ts:36 ~ OrdersService ~ create ~ order',
-      order,
-    );
     await this.ordersRepository.save(order);
 
     for (const orderItem of createOrderDto.orderItems) {

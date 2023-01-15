@@ -22,6 +22,12 @@ export class Order {
   })
   orderDate: Date;
 
+  @Column()
+  shippingAddress: string;
+
+  @Column()
+  note: string;
+
   @Column({
     type: 'enum',
     enum: OrderStatus,

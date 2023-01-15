@@ -15,6 +15,14 @@ export class ProductService {
     return this.productsRepository.save(createProductDto);
   }
 
+  likeProduct(productId: number, userId: number) {
+    return this.productsRepository
+      .createQueryBuilder()
+      .relation(Product, 'usersWhoLiked')
+      .of(productId)
+      .add(userId);
+  }
+
   findAll() {
     return this.productsRepository.find();
   }

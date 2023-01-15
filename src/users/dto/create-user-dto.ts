@@ -9,4 +9,8 @@ export class CreateUserDTO {
   lastName: string;
   @ApiProperty()
   password: string;
+  @ApiProperty()
+  address?: string;
+  @ApiProperty()
+  phone?: string;
 }

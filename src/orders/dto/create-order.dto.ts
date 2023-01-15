@@ -4,4 +4,6 @@ import { CreateOrderItemDto } from './create-order-item.dto';
 export class CreateOrderDto {
   status: OrderStatus;
   orderItems: CreateOrderItemDto[];
+  shippingAddress: string;
+  note: string;
 }
