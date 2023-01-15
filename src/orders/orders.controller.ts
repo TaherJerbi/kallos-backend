@@ -33,13 +33,13 @@ export class OrdersController {
     return this.ordersService.findByUser(user.email);
   }
 
-  @Put('/:id')
+  @Post(':id/cancel')
   async cancelOrder(id: number, @Req() req: RequestWithUser) {
     const order = await this.ordersService.findOne(id);
-    if (req.user.email !== order.user.email) {
+    if (order.user.id !== +req.user.userId) {
       throw new UnauthorizedException();
     }
 
-    return this.ordersService.updateStatus(id, OrderStatus.Cancelled);
+    return this.ordersService.updateStatus(order.id, OrderStatus.Cancelled);
   }
 }

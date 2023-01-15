@@ -1,5 +1,13 @@
 // profile controller
-import { Controller, Get, Body, Put, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Put,
+  UseGuards,
+  Req,
+  Post,
+} from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RequestWithUser } from './auth/jwt.strategy';
 import { UpdateUserDTO } from './users/dto/update-user-dto';
@@ -19,7 +27,7 @@ export class ProfileController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put()
+  @Post()
   async updateProfile(
     @Req() req: RequestWithUser,
     @Body() body: UpdateUserDTO,

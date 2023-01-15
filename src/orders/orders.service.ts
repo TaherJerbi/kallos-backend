@@ -52,18 +52,28 @@ export class OrdersService {
   findOne(id: number) {
     return this.ordersRepository.findOne({
       where: { id },
-      relations: ['orderItems', 'orderItems.product'],
+      relations: ['orderItems', 'orderItems.product', 'user'],
+      select: {
+        user: {
+          id: true,
+        },
+      },
     });
   }
 
   findByUser(email: string) {
     return this.ordersRepository.find({
       where: { user: { email } },
-      relations: ['orderItems', 'orderItems.product'],
+      relations: ['orderItems', 'orderItems.product', 'user'],
+      select: {
+        user: {
+          id: true,
+        },
+      },
     });
   }
 
   updateStatus(id: number, status: OrderStatus) {
-    return this.ordersRepository.update({ id }, { status });
+    return this.ordersRepository.update(id, { status });
   }
 }
