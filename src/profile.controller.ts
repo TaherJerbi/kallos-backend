@@ -1,6 +1,8 @@
 // profile controller
 import { Controller, Get, Body, Put, UseGuards, Req } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RequestWithUser } from './auth/jwt.strategy';
+import { UpdateUserDTO } from './users/dto/update-user-dto';
 import { UsersService } from './users/users.service';
 
 @Controller('profile')
@@ -9,7 +11,7 @@ export class ProfileController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getProfile(@Req() req) {
+  async getProfile(@Req() req: RequestWithUser) {
     const { password, ...user } = await this.usersService.findOne(
       req.user.email,
     );
@@ -18,7 +20,10 @@ export class ProfileController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  async updateProfile(@Req() req, @Body() body) {
+  async updateProfile(
+    @Req() req: RequestWithUser,
+    @Body() body: UpdateUserDTO,
+  ) {
     await this.usersService.update(req.user.email, body);
     return this.getProfile(req);
   }

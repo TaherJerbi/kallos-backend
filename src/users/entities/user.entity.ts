@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 export enum Role {
@@ -61,5 +62,6 @@ export class User {
   orders: Order[];
 
   @ManyToMany(() => Product, (product) => product.usersWhoLiked)
+  @JoinTable()
   likedProducts: Product[];
 }

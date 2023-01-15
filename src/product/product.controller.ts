@@ -13,6 +13,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RequestWithUser } from 'src/auth/jwt.strategy';
 
 @Controller('product')
 export class ProductController {
@@ -35,8 +36,14 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':id/like')
-  likeProduct(@Param('id') id: string, @Req() req) {
-    return this.productService.likeProduct(+id, req.user.id);
+  likeProduct(@Param('id') id: string, @Req() req: RequestWithUser) {
+    return this.productService.likeProduct(+id, +req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('liked')
+  likedProduct(@Req() req: RequestWithUser) {
+    return this.productService.likedProducts(+req.user.userId);
   }
 
   // @Patch(':id')
