@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderItem } from 'src/orders/entities/order-item.entity';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import Category from './category.enum';
 
 @Entity()
@@ -21,4 +30,10 @@ export class Product {
     enum: Category,
   })
   category: Category;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
+  orderItems: OrderItem[];
+
+  @ManyToMany(() => User, (user) => user.likedProducts)
+  usersWhoLiked: User[];
 }

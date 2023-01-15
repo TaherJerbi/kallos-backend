@@ -1,9 +1,14 @@
+import { Order } from 'src/orders/entities/order.entity';
+import { Product } from 'src/product/entities/product.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 export enum Role {
@@ -21,6 +26,16 @@ export class User {
 
   @Column()
   lastName: string;
+
+  @Column({
+    nullable: true,
+  })
+  address: string;
+
+  @Column({
+    nullable: true,
+  })
+  phone: string;
 
   @Column({
     type: 'enum',
@@ -42,4 +57,11 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
+
+  @ManyToMany(() => Product, (product) => product.usersWhoLiked)
+  @JoinTable()
+  likedProducts: Product[];
 }

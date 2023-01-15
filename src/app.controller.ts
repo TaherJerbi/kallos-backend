@@ -40,10 +40,4 @@ export class AppController {
       password: undefined,
     };
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
 }
