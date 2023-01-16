@@ -16,21 +16,24 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { OrderStatus } from './entities/order-status.enum';
 import { RequestWithUser } from 'src/auth/jwt.strategy';
+import AbstractController from 'src/abstract.controller';
 
 @UseGuards(JwtAuthGuard)
 @Controller('orders')
-export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+export class OrdersController extends AbstractController {
+  constructor(private readonly ordersService: OrdersService) {
+    super()
+  }
 
   @Post()
   create(@Req() req: RequestWithUser, @Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto, req.user.email);
+    return this.successResponse(this.ordersService.create(createOrderDto, req.user.email));
   }
 
   @Get()
   findAll(@Req() req: RequestWithUser) {
     const user = req.user;
-    return this.ordersService.findByUser(user.email);
+    return this.successResponse(this.ordersService.findByUser(user.email));
   }
 
   @Post(':id/cancel')
@@ -40,6 +43,6 @@ export class OrdersController {
       throw new UnauthorizedException();
     }
 
-    return this.ordersService.updateStatus(order.id, OrderStatus.Cancelled);
+    return this.successResponse(this.ordersService.updateStatus(order.id, OrderStatus.Cancelled));
   }
 }
