@@ -8,6 +8,7 @@ import {
   Req,
   Post,
 } from '@nestjs/common';
+import AbstractController from './abstract.controller';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RequestWithUser } from './auth/jwt.strategy';
@@ -15,11 +16,13 @@ import { UpdateUserDTO } from './users/dto/update-user-dto';
 import { UsersService } from './users/users.service';
 
 @Controller('profile')
-export class ProfileController {
+export class ProfileController extends AbstractController {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
-  ) {}
+  ) {
+    super();
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -27,7 +30,7 @@ export class ProfileController {
     const { password, ...user } = await this.usersService.findOne(
       req.user.email,
     );
-    return user;
+    return this.successResponse(user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -37,7 +40,7 @@ export class ProfileController {
     @Body() body: UpdateUserDTO,
   ) {
     await this.usersService.update(req.user.email, body);
-    return this.getProfile(req);
+    return this.successResponse(this.getProfile(req));
   }
 
   @UseGuards(JwtAuthGuard)
@@ -56,6 +59,6 @@ export class ProfileController {
         password: encrypted,
       });
     }
-    return this.getProfile(req);
+    return this.successResponse(this.getProfile(req));
   }
 }

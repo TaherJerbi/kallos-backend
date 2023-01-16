@@ -40,11 +40,11 @@ export class ProductService {
         (user) => user.id !== userId,
       );
       await this.productsRepository.save(product);
-      return product.id;
+      return { id: product.id, message: 'unliked' };
     } else {
       product.usersWhoLiked.push(user);
       await this.productsRepository.save(product);
-      return product.id;
+      return { id: product.id, message: 'liked' };
     }
   }
 

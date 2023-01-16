@@ -17,7 +17,7 @@ import AbstractController from 'src/abstract.controller';
 @Controller('products')
 export class ProductController extends AbstractController {
   constructor(private readonly productService: ProductService) {
-    super()
+    super();
   }
 
   @Post()
@@ -33,11 +33,9 @@ export class ProductController extends AbstractController {
   @UseGuards(JwtAuthGuard)
   @Get('liked')
   likedProduct(@Req() req: RequestWithUser) {
-    console.log(
-      '🚀 ~ file: product.controller.ts:45 ~ ProductController ~ likedProduct ~ eq.user.userId',
-      req.user,
+    return this.successResponse(
+      this.productService.likedProducts(+req.user.userId),
     );
-    return this.successResponse(this.productService.likedProducts(+req.user.userId));
   }
 
   @Get(':id')
@@ -48,7 +46,9 @@ export class ProductController extends AbstractController {
   @UseGuards(JwtAuthGuard)
   @Post(':id/like')
   likeProduct(@Param('id') id: string, @Req() req: RequestWithUser) {
-    return this.successResponse(this.productService.likeProduct(+id, +req.user.userId));
+    return this.successResponse(
+      this.productService.likeProduct(+id, +req.user.userId),
+    );
   }
 
   // @Patch(':id')
