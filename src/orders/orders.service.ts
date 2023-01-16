@@ -73,7 +73,8 @@ export class OrdersService {
     });
   }
 
-  updateStatus(id: number, status: OrderStatus) {
-    return this.ordersRepository.update(id, { status });
+  async updateStatus(id: number, status: OrderStatus) {
+    await this.ordersRepository.update(id, { status });
+    return this.findOne(id);
   }
 }

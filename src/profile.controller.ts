@@ -59,6 +59,6 @@ export class ProfileController extends AbstractController {
         password: encrypted,
       });
     }
-    return this.successResponse(this.getProfile(req));
+    return this.getProfile(req);
   }
 }

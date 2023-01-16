@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-export interface ApiResponse<T = {}> {
+export interface ApiResponse<T = object> {
   status: number;
   message: string;
   data: T | Promise<T>;
