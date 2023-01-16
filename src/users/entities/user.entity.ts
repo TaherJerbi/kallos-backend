@@ -20,7 +20,6 @@ export enum Role {
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-
   @Column()
   firstName: string;
 
@@ -31,6 +30,11 @@ export class User {
     nullable: true,
   })
   address: string;
+
+  @Column({
+    nullable: true,
+  })
+  avatar?: number;
 
   @Column({
     nullable: true,
