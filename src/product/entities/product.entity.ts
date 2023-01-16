@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import Category from './category.enum';
 
@@ -23,6 +22,11 @@ export class Product {
 
   @Column()
   price: number;
+
+  @Column({
+    nullable: true,
+  })
+  image?: string;
 
   // enum Category Column
   @Column({
