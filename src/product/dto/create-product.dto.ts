@@ -5,4 +5,5 @@ export class CreateProductDto {
   description: string;
   price: number;
   category: Category;
+  images: string[] = [];
 }

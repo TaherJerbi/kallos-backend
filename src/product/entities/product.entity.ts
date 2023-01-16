@@ -21,6 +21,12 @@ export class Product {
   @Column()
   description: string;
 
+  @Column({nullable: true})
+  details: string;
+
+  @Column('json')
+  images: string[] = []
+
   @Column()
   price: number;
 
