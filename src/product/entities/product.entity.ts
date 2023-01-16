@@ -23,16 +23,11 @@ export class Product {
   @Column({nullable: true})
   details: string;
 
-  @Column('json')
-  images: string[] = []
+  @Column({type: "json", default: '[]'})
+  images: string[]
 
   @Column()
   price: number;
-
-  @Column({
-    nullable: true,
-  })
-  image?: string;
 
   // enum Category Column
   @Column({

@@ -12,19 +12,22 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RequestWithUser } from 'src/auth/jwt.strategy';
+import AbstractController from 'src/abstract.controller';
 
 @Controller('products')
-export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+export class ProductController extends AbstractController {
+  constructor(private readonly productService: ProductService) {
+    super()
+  }
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+    return this.successResponse(this.productService.create(createProductDto));
   }
 
   @Get()
   findAll() {
-    return this.productService.findAll();
+    return this.successResponse(this.productService.findAll());
   }
 
   @UseGuards(JwtAuthGuard)
@@ -34,18 +37,18 @@ export class ProductController {
       '🚀 ~ file: product.controller.ts:45 ~ ProductController ~ likedProduct ~ eq.user.userId',
       req.user,
     );
-    return this.productService.likedProducts(+req.user.userId);
+    return this.successResponse(this.productService.likedProducts(+req.user.userId));
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+    return this.successResponse(this.productService.findOne(+id));
   }
 
   @UseGuards(JwtAuthGuard)
   @Post(':id/like')
   likeProduct(@Param('id') id: string, @Req() req: RequestWithUser) {
-    return this.productService.likeProduct(+id, +req.user.userId);
+    return this.successResponse(this.productService.likeProduct(+id, +req.user.userId));
   }
 
   // @Patch(':id')
@@ -55,6 +58,6 @@ export class ProductController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+    return this.successResponse(this.productService.remove(+id));
   }
 }

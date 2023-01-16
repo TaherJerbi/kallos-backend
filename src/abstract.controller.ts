@@ -1,12 +1,12 @@
 import { HttpStatus } from "@nestjs/common";
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T = {}> {
     status: number;
     message: string;
-    data: T;
+    data: T | Promise<T>;
   }
 
-abstract class AbstractController {
+export default abstract class AbstractController {
     successResponse<T>(data: T, message: string = "") {
         return this.apiResponseReturn(data, message, HttpStatus.OK);
     }
@@ -19,11 +19,11 @@ abstract class AbstractController {
         return this.apiResponseReturn(data, message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private apiResponseReturn<T>(data: T, message: string = "", status: number = HttpStatus.OK): ApiResponse<T> {
+    private async apiResponseReturn<T>(data: T, message: string = "", status: number = HttpStatus.OK): Promise<ApiResponse<T>> {
         return {
             status,
             message,
-            data
+            data : await data
         }
     }
 }
