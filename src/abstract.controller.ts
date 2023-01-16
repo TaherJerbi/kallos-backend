@@ -7,15 +7,15 @@ export interface ApiResponse<T = object> {
 }
 
 export default abstract class AbstractController {
-  successResponse<T>(data: T, message: string = '') {
+  successResponse<T>(data: T = null, message: string = '') {
     return this.apiResponseReturn(data, message, HttpStatus.OK);
   }
 
-  notFounResponse<T>(data: T, message: string = '') {
+  notFoundResponse<T>(data: T = null, message: string = 'Not found') {
     return this.apiResponseReturn(data, message, HttpStatus.NOT_FOUND);
   }
 
-  internalErrorResponse<T>(data: T, message: string = '') {
+  internalErrorResponse<T>(data: T = null, message: string = 'Internal error') {
     return this.apiResponseReturn(
       data,
       message,
@@ -24,7 +24,7 @@ export default abstract class AbstractController {
   }
 
   private async apiResponseReturn<T>(
-    data: T,
+    data: T = null,
     message: string = '',
     status: number = HttpStatus.OK,
   ): Promise<ApiResponse<T>> {

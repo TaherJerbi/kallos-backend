@@ -17,13 +17,13 @@ export class Product {
   @Column()
   name: string;
 
-  @Column()
+  @Column('longtext')
   description: string;
 
   @Column({nullable: true})
   details: string;
 
-  @Column({type: "json", default: '[]'})
+  @Column({type: "json", default: '["http://localhost:3000/uploads/products/default.jpg"]'})
   images: string[]
 
   @Column()
