@@ -1,4 +1,10 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch(HttpException)
@@ -8,13 +14,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
-    console.log("inside exception", exception)
-    response
-      .status(status)
-      .json({
+
+    if (status == HttpStatus.UNAUTHORIZED) {
+      response.status(status).json({
+        status,
+        data: null,
+        message: 'Invalid credentials',
+      });
+    } else {
+      response.status(status).json({
         status: status,
-        message: "an error has occurred",
+        message: 'an error has occurred',
         data: null,
       });
+    }
   }
 }

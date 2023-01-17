@@ -32,6 +32,11 @@ export class ProductController extends AbstractController {
     return this.successResponse(this.productService.findAll());
   }
 
+  @Get("latest")
+  async getLatest() {
+    return this.successResponse(this.productService.getLatest())
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('liked')
   likedProduct(@Req() req: RequestWithUser) {

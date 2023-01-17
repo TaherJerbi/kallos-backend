@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import Category from './category.enum';
 
@@ -41,4 +43,10 @@ export class Product {
 
   @ManyToMany(() => User, (user) => user.likedProducts)
   usersWhoLiked: User[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
