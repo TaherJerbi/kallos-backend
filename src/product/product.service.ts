@@ -65,4 +65,13 @@ export class ProductService {
   remove(id: number) {
     return this.productsRepository.delete({ id });
   }
+
+  getLatest() {
+    return this.productsRepository.find({
+      order: {
+        createdAt: 'DESC',
+      },
+      take: 3,
+    });
+  }
 }
