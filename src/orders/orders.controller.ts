@@ -22,12 +22,15 @@ import AbstractController from 'src/abstract.controller';
 @Controller('orders')
 export class OrdersController extends AbstractController {
   constructor(private readonly ordersService: OrdersService) {
-    super()
+    super();
   }
 
   @Post()
   create(@Req() req: RequestWithUser, @Body() createOrderDto: CreateOrderDto) {
-    return this.successResponse(this.ordersService.create(createOrderDto, req.user.email));
+    return this.successResponse(
+      this.ordersService.create(createOrderDto, req.user.email),
+      'Order saved.',
+    );
   }
 
   @Get()
@@ -43,6 +46,9 @@ export class OrdersController extends AbstractController {
       throw new UnauthorizedException();
     }
 
-    return this.successResponse(this.ordersService.updateStatus(order.id, OrderStatus.Cancelled));
+    return this.successResponse(
+      this.ordersService.updateStatus(order.id, OrderStatus.Cancelled),
+      'Order cancelled.',
+    );
   }
 }
