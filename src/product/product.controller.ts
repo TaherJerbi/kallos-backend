@@ -42,9 +42,15 @@ export class ProductController extends AbstractController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const product = await this.productService.findOne(+id);
+    const productId = parseInt(id);
+
+    if (!productId) return this.internalErrorResponse();
+
+    const product = await this.productService.findOne(productId);
+    
     if (product) return this.successResponse(product);
-    return this.notFoundResponse()
+
+    return this.notFoundResponse();
   }
 
   @UseGuards(JwtAuthGuard)

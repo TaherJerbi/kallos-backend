@@ -27,7 +27,7 @@ export class TransformationInterceptor<T>
             context.switchToHttp().getResponse().status(HttpStatus.NOT_FOUND);
             break;
             case HttpStatus.INTERNAL_SERVER_ERROR:
-            context.switchToHttp().getResponse().status(HttpStatus.NOT_FOUND);
+            context.switchToHttp().getResponse().status(HttpStatus.INTERNAL_SERVER_ERROR);
             break;
         }
         return data;
