@@ -28,7 +28,7 @@ export class Product {
   @Column({
     type: 'json',
   })
-  images: string[] = ['http://localhost:3000/uploads/products/default.jpg'];
+  images: string[];
 
   @Column()
   price: number;
