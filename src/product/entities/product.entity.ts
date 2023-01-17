@@ -22,11 +22,13 @@ export class Product {
   @Column('longtext')
   description: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   details: string;
 
-  @Column({type: "json", default: '["http://localhost:3000/uploads/products/default.jpg"]'})
-  images: string[]
+  @Column({
+    type: 'json',
+  })
+  images: string[] = ['http://localhost:3000/uploads/products/default.jpg'];
 
   @Column()
   price: number;

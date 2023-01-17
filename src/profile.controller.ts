@@ -40,7 +40,7 @@ export class ProfileController extends AbstractController {
     @Body() body: UpdateUserDTO,
   ) {
     await this.usersService.update(req.user.email, body);
-    return this.successResponse(this.getProfile(req));
+    return this.getProfile(req);
   }
 
   @UseGuards(JwtAuthGuard)
