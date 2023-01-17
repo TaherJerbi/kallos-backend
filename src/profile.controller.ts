@@ -27,9 +27,7 @@ export class ProfileController extends AbstractController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getProfile(@Req() req: RequestWithUser) {
-    const { password, ...user } = await this.usersService.findOne(
-      req.user.email,
-    );
+    const user = await this.usersService.findOneHidePassword(req.user.email);
     return this.successResponse(user);
   }
 
@@ -40,7 +38,9 @@ export class ProfileController extends AbstractController {
     @Body() body: UpdateUserDTO,
   ) {
     await this.usersService.update(req.user.email, body);
-    return this.getProfile(req);
+    const user = await this.usersService.findOneHidePassword(req.user.email);
+
+    return this.successResponse(user, 'Profile updated successfully');
   }
 
   @UseGuards(JwtAuthGuard)
@@ -59,6 +59,8 @@ export class ProfileController extends AbstractController {
         password: encrypted,
       });
     }
-    return this.getProfile(req);
+    const user = await this.usersService.findOneHidePassword(req.user.email);
+
+    return this.successResponse(user, 'Password changed successfully');
   }
 }

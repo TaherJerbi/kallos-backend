@@ -43,4 +43,10 @@ export class UsersService {
   async update(email: string, updateUserDTO: UpdateUserDTO) {
     return this.usersRepository.update({ email: email }, updateUserDTO);
   }
+
+  async findOneHidePassword(email: string) {
+    const { password, ...user } = await this.findOne(email);
+
+    return user;
+  }
 }
