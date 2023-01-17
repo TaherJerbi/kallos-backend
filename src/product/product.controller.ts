@@ -13,8 +13,6 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RequestWithUser } from 'src/auth/jwt.strategy';
 import AbstractController from 'src/abstract.controller';
-import { Response } from 'express';
-import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Controller('products')
 export class ProductController extends AbstractController {
@@ -24,7 +22,14 @@ export class ProductController extends AbstractController {
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
-    return this.successResponse(this.productService.create(createProductDto));
+    return this.successResponse(
+      this.productService.create({
+        ...createProductDto,
+        images: createProductDto.images || [
+          'http://localhost:3000/uploads/products/default.jpg',
+        ],
+      }),
+    );
   }
 
   @Get()
@@ -32,9 +37,9 @@ export class ProductController extends AbstractController {
     return this.successResponse(this.productService.findAll());
   }
 
-  @Get("latest")
+  @Get('latest')
   async getLatest() {
-    return this.successResponse(this.productService.getLatest())
+    return this.successResponse(this.productService.getLatest());
   }
 
   @UseGuards(JwtAuthGuard)
@@ -52,7 +57,7 @@ export class ProductController extends AbstractController {
     if (!productId) return this.internalErrorResponse();
 
     const product = await this.productService.findOne(productId);
-    
+
     if (product) return this.successResponse(product);
 
     return this.notFoundResponse();
