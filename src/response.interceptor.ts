@@ -29,6 +29,9 @@ export class TransformationInterceptor<T>
             case HttpStatus.INTERNAL_SERVER_ERROR:
             context.switchToHttp().getResponse().status(HttpStatus.INTERNAL_SERVER_ERROR);
             break;
+            case HttpStatus.UNAUTHORIZED:
+            context.switchToHttp().getResponse().status(HttpStatus.UNAUTHORIZED);
+            break;
         }
         return data;
       }),
