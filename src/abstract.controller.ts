@@ -15,6 +15,10 @@ export default abstract class AbstractController {
     return this.apiResponseReturn(data, message, HttpStatus.NOT_FOUND);
   }
 
+  unauthorizedResponse<T>(data: T = null, message: string = 'Unauthorized') {
+    return this.apiResponseReturn(data, message, HttpStatus.UNAUTHORIZED);
+  }
+
   internalErrorResponse<T>(data: T = null, message: string = 'Internal error') {
     return this.apiResponseReturn(
       data,
