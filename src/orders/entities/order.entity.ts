@@ -25,7 +25,9 @@ export class Order {
   @Column()
   shippingAddress: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   note: string;
 
   @Column({
