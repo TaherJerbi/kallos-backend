@@ -59,6 +59,10 @@ export class ProductService {
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
+    console.log(
+      '🚀 ~ file: product.service.ts:62 ~ ProductService ~ update ~ updateProductDto',
+      updateProductDto,
+    );
     return this.productsRepository.update({ id }, updateProductDto);
   }
 

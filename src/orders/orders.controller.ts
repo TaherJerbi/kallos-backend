@@ -40,8 +40,17 @@ export class OrdersController extends AbstractController {
   }
 
   @Post(':id/cancel')
-  async cancelOrder(id: number, @Req() req: RequestWithUser) {
+  async cancelOrder(@Param('id') id: number, @Req() req: RequestWithUser) {
+    console.log(
+      '🚀 ~ file: orders.controller.ts:44 ~ OrdersController ~ cancelOrder ~ req',
+      req.user,
+    );
     const order = await this.ordersService.findOne(id);
+    console.log(
+      '🚀 ~ file: orders.controller.ts:45 ~ OrdersController ~ cancelOrder ~ order',
+      order,
+    );
+
     if (order.user.id !== +req.user.userId) {
       throw new UnauthorizedException();
     }

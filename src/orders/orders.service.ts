@@ -21,7 +21,15 @@ export class OrdersService {
   ) {}
 
   async create(createOrderDto: CreateOrderDto, email: string) {
+    console.log(
+      '🚀 ~ file: orders.service.ts:24 ~ OrdersService ~ create ~ email',
+      email,
+    );
     const user = await this.usersService.findOne(email);
+    console.log(
+      '🚀 ~ file: orders.service.ts:26 ~ OrdersService ~ create ~ user',
+      user,
+    );
     const order = this.ordersRepository.create({
       orderDate: new Date(),
       status: createOrderDto.status,
