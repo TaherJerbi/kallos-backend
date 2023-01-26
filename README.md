@@ -7,7 +7,7 @@
 
 ## Description
 
-This is the backend for Kallos, an online Greek gifts store using Angular.js, TypeScript, and Nest.js.
+This is the backend for Kallos, an online Greek gifts store made with Angular.js, TypeScript, and Nest.js.
 
 ## Team
 Kallos was made by a team of five people: 
