@@ -9,6 +9,8 @@
 
 This is the backend for Kallos, an online Greek gifts store made with Angular.js, TypeScript, and Nest.js.
 
+Frontend Repository : [nawresncib12/Kallos](https://github.com/nawresncib12/Kallos)
+
 ## Presentation Video
 <p align="center">
   <a href="https://www.youtube.com/watch?v=w26ujmQtsP0">
